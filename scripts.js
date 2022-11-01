@@ -6,8 +6,20 @@ function initializeGame(){
             document.querySelector("#game-start").style.display = "none";
             document.querySelector("#button-group").appendChild(createButton("play-hand", "Play Hand"));
             listenForChoice();
+            playHand();
             
         });
+}
+
+function playHand(){
+    document.querySelector("#play-hand").addEventListener("click", () => {
+        if (playerSelection === undefined) {
+
+        } else {
+            document.querySelector("#play-hand").style.display = "none";
+            document.querySelector("#button-group").appendChild(createButton("play-again", "Play Again"));
+        }
+    })
 }
 
 //this function accepts a string representing the id of a new button and a string indicating the text to display on the button
