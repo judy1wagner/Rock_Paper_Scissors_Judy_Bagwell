@@ -9,8 +9,6 @@ function initializeGame(){
             document.querySelector("#button-group").appendChild(createNewElement("button", "play-hand", "Play Hand"));
             listenForChoice();
             playHand();
-           
-            
         });
 }
 
@@ -29,17 +27,6 @@ function playHand(){
             //get computer selection
             computerSelection = Math.floor(Math.random() * 3);
             
-            /*
-            0-2 = -2: user has rock, computer has scissors - player wins
-            2-0 = 2: user has scissors, computer has rock - computer wins
-
-            0-1 = -1: user has rock, computer has paper - computer wins
-            1-0 = 1: user has paper, computer has rock - player wins
-
-            1-2 = -1: user has paper, computer has scissors 
-            2-1 = 1: user has scissors, computer has paper
-            */
-
             //if it's a tie, set the color of the icon to mixed
             //and show draw message
             if(computerSelection === game.indexOf(playerSelection.toString())){
@@ -77,14 +64,11 @@ function setFinalText(){
     document.querySelector("h2").innerHTML = actionTextOptions[results[playerVsComputer].actionTextIndex];
     let winPhrase = createNewElement("span", "results_header", winTextOptions[results[playerVsComputer].winTextIndex]);
     winPhrase.style.color = "#FE00B7";
+
     //TODO: https://www.w3schools.com/jsref/prop_style_paddingleft.asp
     winPhrase.style.paddingLeft = "15px";
     document.querySelector("h2").appendChild(winPhrase);
-    
-    console.log(winTextOptions[results[playerVsComputer].winTextIndex]);
 }
-
-
 
 //this function accepts a string representing the id of a new button and a string indicating the text to display on the button
 //it returns a new button element
@@ -106,15 +90,13 @@ function listenForChoice(){
     
     choices.forEach((choice, i, arr) => {
 
-        choice.addEventListener("mouseover", () => {
-            document.querySelector("h2").innerHTML = (`${arr[i].id.charAt(0).toUpperCase() + arr[i].id.slice(1)} . . .`);
-        })
+        choice.addEventListener("mouseover", hoverMouse);
 
-        choice.addEventListener("mouseleave", () => {
+        choice.addEventListener("mouseleave", function unhoverMouse(){
             document.querySelector("h2").innerHTML = headerTwoText;
         })         
 
-        choice.addEventListener("click", (e) => {    
+        choice.addEventListener("click", function clickChoice (e){    
             //this if statement turns the previous choice back to white
             //TODO: https://stackoverflow.com/questions/24639493/gather-divs-and-perform-css-on-them-htmlcollection-vs-array
             if(playerSelection !== undefined){
@@ -129,8 +111,17 @@ function listenForChoice(){
             document.querySelector("h2").innerHTML = headerTwoText;
         })
     });
-
 }
+
+/*
+TODO: https://dev.to/smotchkkiss/function-identity-in-javascript-or-how-to-remove-event-listeners-properly-1ll3
+*/
+function hoverMouse(event){
+    let possibleChoice = event.target.parentElement.id;
+    document.querySelector("h2").innerHTML = possibleChoice.charAt(0).toUpperCase() + possibleChoice.slice(1) + " . . . ";
+}
+
+
 /*
 https://www.freecodecamp.org/news/refresh-the-page-in-javascript-js-reload-window-tutorial/#:~:text=You%20can%20use%20the%20location,method%20responsible%20for%20page%20reloading.
 */
