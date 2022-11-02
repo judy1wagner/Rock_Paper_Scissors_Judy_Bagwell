@@ -27,6 +27,8 @@ function playHand(){
             
             choices.forEach((choice) => {
                 choice.removeEventListener("mouseover", hoverMouse);
+                choice.removeEventListener("mouseleave", unhoverMouse);
+                choice.removeEventListener("click", clickChoice);
             });
         
             //TODO: Remove event listeners
@@ -79,6 +81,9 @@ function setFinalText(){
 
 //this function accepts a string representing the id of a new button and a string indicating the text to display on the button
 //it returns a new button element
+/*
+TODO: http://www.java2s.com/example/javascript/dom-html-element/create-span-element-change-its-color-and-append-to-document.html
+*/
 function createNewElement(type, idText, text){
     let newElement = document.createElement(type);
     newElement.setAttribute("id", idText);
@@ -99,24 +104,27 @@ function listenForChoice(){
 
         choice.addEventListener("mouseover", hoverMouse);
 
-        choice.addEventListener("mouseleave", function unhoverMouse(){
-            document.querySelector("h2").innerHTML = headerTwoText;
-        })         
+        /*
+        https://www.youtube.com/watch?v=I4MebkHvj8g
+        */
+        choice.addEventListener("mouseleave", unhoverMouse()(headerTwoText));         
 
-        choice.addEventListener("click", function clickChoice (e){    
-            //this if statement turns the previous choice back to white
-            //TODO: https://stackoverflow.com/questions/24639493/gather-divs-and-perform-css-on-them-htmlcollection-vs-array
-            if(playerSelection !== undefined){
-                let prevChoice = document.getElementById(playerSelection).children;
-                for (let item of prevChoice){
-                    item.style.color = "#FFFFFF";
-                }
-            }            
-            playerSelection = arr[i].id;
-            e.target.style.color = "#FE00B7";
-            headerTwoText = `${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)} . . .`;
-            document.querySelector("h2").innerHTML = headerTwoText;
-        })
+        // choice.addEventListener("click", function clickChoice (e){    
+        //     //this if statement turns the previous choice back to white
+        //     //TODO: https://stackoverflow.com/questions/24639493/gather-divs-and-perform-css-on-them-htmlcollection-vs-array
+        //     if(playerSelection !== undefined){
+        //         let prevChoice = document.getElementById(playerSelection).children;
+        //         for (let item of prevChoice){
+        //             item.style.color = "#FFFFFF";
+        //         }
+        //     }            
+        //     playerSelection = arr[i].id;
+        //     e.target.style.color = "#FE00B7";
+        //     headerTwoText = `${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)} . . .`;
+        //     document.querySelector("h2").innerHTML = headerTwoText;
+        // })
+        choice.addEventListener("click", clickChoice);
+
     });
 }
 
@@ -127,6 +135,30 @@ function hoverMouse(event){
     let possibleChoice = event.target.parentElement.id;
     document.querySelector("h2").innerHTML = possibleChoice.charAt(0).toUpperCase() + possibleChoice.slice(1) + " . . . ";
 }
+
+function unhoverMouse(){
+    return (headerTwoText) => {
+        console.log(headerTwoText);
+        document.querySelector("h2").innerHTML = headerTwoText;
+    }
+}
+
+function clickChoice (event){
+        //update color of previous selection to white
+        if(playerSelection !== undefined){
+            let prevChoice = document.getElementById(playerSelection).children;
+            for (let item of prevChoice){
+                item.style.color = "#FFFFFF";
+            }
+        }            
+        //update playerSelection
+        playerSelection = event.target.parentElement.id;;
+        //turn playerSelection to pink
+        event.target.style.color = "#FE00B7";
+    
+        let headerTwoText = `${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)} . . .`;
+        document.querySelector("h2").innerHTML = headerTwoText;
+}            
 
 
 /*
