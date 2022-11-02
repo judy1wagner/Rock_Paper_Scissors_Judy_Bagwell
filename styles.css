@@ -64,3 +64,14 @@ h2 {
     cursor: pointer;
     transform: scale(1.1);
 }
+
+/* 
+https://www.geeksforgeeks.org/how-to-create-linear-gradient-text-using-html-and-css/
+*/
+.draw {
+    background: conic-gradient(from 180deg at 50% 50%, #FE00B7 0deg, #D2FFAF 360deg);
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    
+}

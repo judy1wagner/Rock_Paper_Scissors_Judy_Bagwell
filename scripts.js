@@ -1,4 +1,5 @@
 let playerSelection;
+let game = ["rock", "paper", "scissors"];
 
 function initializeGame(){
     document.querySelector("#game-start")
@@ -14,10 +15,43 @@ function initializeGame(){
 function playHand(){
     document.querySelector("#play-hand").addEventListener("click", () => {
         if (playerSelection === undefined) {
-
+            document.querySelector("h2").innerHTML = "You Must Select Rock, Paper, or Scissors";
         } else {
+            //TODO: Remove event listeners
+            //get computer selection
+            let computerSelection = Math.floor(Math.random() * 3);
+            
+            /*
+            0-2 = -2: user has rock, computer has scissors
+            0-1 = -1: user has rock, computer has paper
+            1-0 = 0: user has paper, computer has rock
+            1-2 = -1: user has paper, computer has scissors
+            2-0 = 2: user has scissors, computer has rock
+            2-1 = 1: user has scissors, computer has paper
+            */
+
+            //if it's a tie, set the color of the icon to mixed
+            //and show draw message
+            if(game[computerSelection] === playerSelection.toString()){
+                document.querySelector("h2").innerHTML = "Draw!";
+                let computerIcon = document.getElementById(game[computerSelection]).children;
+                for (let item of computerIcon){
+                    item.classList.add("draw");
+                }
+            } else {
+                let computerIcon = document.getElementById(game[computerSelection]).children;
+                for (let item of computerIcon){
+                    item.style.color = "#D2FFAF";
+                }
+            }
+
+
+
+
+            //button for replay
             document.querySelector("#play-hand").style.display = "none";
             document.querySelector("#button-group").appendChild(createButton("play-again", "Play Again"));
+            playAgain();
         }
     })
 }
@@ -65,5 +99,15 @@ function listenForChoice(){
     });
 
 }
+/*
+https://www.freecodecamp.org/news/refresh-the-page-in-javascript-js-reload-window-tutorial/#:~:text=You%20can%20use%20the%20location,method%20responsible%20for%20page%20reloading.
+*/
 
-initializeGame();
+function playAgain(){
+    document.querySelector("#play-again").addEventListener("click", () => {
+        document.location.reload();
+    })
+ };
+
+ initializeGame();
+
