@@ -6,7 +6,7 @@ function initializeGame(){
     document.querySelector("#game-start")
         .addEventListener("click", () => {
             document.querySelector("#game-start").style.display = "none";
-            document.querySelector("#button-group").appendChild(createButton("play-hand", "Play Hand"));
+            document.querySelector("#button-group").appendChild(createNewElement("button", "play-hand", "Play Hand"));
             listenForChoice();
             playHand();
            
@@ -22,7 +22,7 @@ function playHand(){
         } else {
             //update button
             document.querySelector("#play-hand").style.display = "none";
-            document.querySelector("#button-group").appendChild(createButton("play-again", "Play Again"));
+            document.querySelector("#button-group").appendChild(createNewElement("button", "play-again", "Play Again"));
         
             //TODO: Remove event listeners
 
@@ -60,7 +60,6 @@ function playHand(){
     })
 }
 
-
 //updates h2 with the appropriate message
 function setFinalText(){
     let playerVsComputer = `${playerSelection}_${game[computerSelection]}`;
@@ -75,32 +74,29 @@ function setFinalText(){
     let actionTextOptions = ["Rock crushes Scissors", "Scissors cut Paper", "Paper covers Rock"];
     let winTextOptions = ["You Win!", "You Lose!"]
 
-    console.log(actionTextOptions[results[playerVsComputer].actionTextIndex]);
+    document.querySelector("h2").innerHTML = actionTextOptions[results[playerVsComputer].actionTextIndex];
+    let winPhrase = createNewElement("span", "results_header", winTextOptions[results[playerVsComputer].winTextIndex]);
+    winPhrase.style.color = "#FE00B7";
+    //TODO: https://www.w3schools.com/jsref/prop_style_paddingleft.asp
+    winPhrase.style.paddingLeft = "15px";
+    document.querySelector("h2").appendChild(winPhrase);
+    
     console.log(winTextOptions[results[playerVsComputer].winTextIndex]);
 }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 //this function accepts a string representing the id of a new button and a string indicating the text to display on the button
 //it returns a new button element
-function createButton(idText, text){
-    let newButton = document.createElement('button');
-    newButton.setAttribute("id", idText);
-    newButton.textContent = text;
-    newButton.classList.add('play-buttons');
+function createNewElement(type, idText, text){
+    let newElement = document.createElement(type);
+    newElement.setAttribute("id", idText);
+    newElement.textContent = text;
+    if(type === "button"){
+        newElement.classList.add('play-buttons');
+    }
 
-    return newButton;
+    return newElement;
 }
 
 function listenForChoice(){
