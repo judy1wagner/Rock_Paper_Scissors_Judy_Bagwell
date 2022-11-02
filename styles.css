@@ -1,3 +1,20 @@
+/***************************************************************************************
+*    Title: Project 2, DOM, Eventlisteners and Client Side Programming
+*    Author: Prof. Liz Nelson, Whatcom Community College
+*    Date: October 23. 2022
+*    Code version: CSS3
+*    Availability: SD230 29146 Panapto Recordings https://whatcom.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=d03a7453-4102-4297-8fb8-af3a00e68f35
+***************************************************************************************/
+
+/***************************************************************************************
+*    Title: Figma Design Files: Rock, Paper, Scissors
+*    Author: Prof. Liz Nelson, Whatcom Community College
+*    Date: October 2022
+*    Code version: CSS3
+*    Availability: SD230 29146 - https://www.figma.com/file/BPFsLRPQc88wi0c9ycEohO/Rock%2C-Paper%2C-Scissors?node-id=0%3A1
+***************************************************************************************/
+
+
 :root {
     background: linear-gradient(90deg, #0B92DE 0%, #78EFE8 100%);
     width: 100%;
@@ -65,9 +82,13 @@ h2 {
     transform: scale(1.1);
 }
 
-/* 
-https://www.geeksforgeeks.org/how-to-create-linear-gradient-text-using-html-and-css/
-*/
+/*************************************************************************************** 
+*    Title: <title of program/source code>
+*    Author: <author(s) names>
+*    Date: <date>
+*    Code version: <code version>
+*    Availability: https://www.geeksforgeeks.org/how-to-create-linear-gradient-text-using-html-and-css/
+***************************************************************************************/
 .draw {
     background: conic-gradient(from 180deg at 50% 50%, #FE00B7 0deg, #D2FFAF 360deg);
     -webkit-text-fill-color: transparent;

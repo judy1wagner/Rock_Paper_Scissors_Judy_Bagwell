@@ -1,3 +1,12 @@
+/***************************************************************************************
+*    Title: Project 2, DOM, Eventlisteners and Client Side Programming
+*    Author: Prof. Liz Nelson, Whatcom Community College
+*    Date: October 23. 2022
+*    Code version: JavaScript
+*    Availability: SD230 29146 Panapto Recordings https://whatcom.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=d03a7453-4102-4297-8fb8-af3a00e68f35
+***************************************************************************************/
+
+
 let playerSelection;
 let computerSelection;
 let game = ["rock", "paper", "scissors"];
@@ -86,7 +95,13 @@ function setFinalText(){
     let winPhrase = createNewElement("span", "results_header", winTextOptions[results[playerVsComputer].winTextIndex]);
     //update the style of the span element
     winPhrase.style.color = "#FE00B7";
-    //TODO: https://www.w3schools.com/jsref/prop_style_paddingleft.asp
+    /***************************************************************************************
+    *    Title: W3Schools, Style paddingLeft Property
+    *    Author: Refsnes Data
+    *    Date: 1999-2022
+    *    Code version: JavaScript
+    *    Availability: https://www.w3schools.com/jsref/prop_style_paddingleft.asp
+    ***************************************************************************************/
     winPhrase.style.paddingLeft = "15px";
     
     //add the span element to h2
@@ -98,9 +113,14 @@ function setFinalText(){
 // and a string indicating the text to add to the element
 //it returns a new element with an id and text
 //if the element is a button, it adds a class of 'play-button' to the element
-/*
-TODO: http://www.java2s.com/example/javascript/dom-html-element/create-span-element-change-its-color-and-append-to-document.html
-*/
+
+/***************************************************************************************
+*    Title: Create <span> element, change its color and append to document - Javascript DOM HTML Element
+*    Author: www.java2s.com
+*    Date: 2016
+*    Code version: javaScript
+*    Availability: http://www.java2s.com/example/javascript/dom-html-element/create-span-element-change-its-color-and-append-to-document.html
+***************************************************************************************/
 function createNewElement(type, idText, text){
     let newElement = document.createElement(type);
     newElement.setAttribute("id", idText);
@@ -123,9 +143,13 @@ function listenForChoice(){
     });
 }
 
-/*
-TODO: https://dev.to/smotchkkiss/function-identity-in-javascript-or-how-to-remove-event-listeners-properly-1ll3
-*/
+/***************************************************************************************
+*    Title: Function identity in JavaScript, or how to remove event listeners properly
+*    Author: Emanuel Tannert
+*    Date: Jun 9, 2018
+*    Code version: JavaScript
+*    Availability: https://dev.to/smotchkkiss/function-identity-in-javascript-or-how-to-remove-event-listeners-properly-1ll3
+***************************************************************************************/
 
 //the following functions handle what happens when the choices are heard
 
@@ -168,9 +192,13 @@ function clickChoice (event){
         document.querySelector("h2").innerHTML = headerTwoText;
 }            
 
-/*
-https://www.freecodecamp.org/news/refresh-the-page-in-javascript-js-reload-window-tutorial/#:~:text=You%20can%20use%20the%20location,method%20responsible%20for%20page%20reloading.
-*/
+/***************************************************************************************
+*    Title: Refresh the Page in JavaScript - JS Reload Window Tutorial
+*    Author: Joel Olawanle
+*    Date: Jue 27, 2022
+*    Code version: JavaScript
+*    Availability: https://www.freecodecamp.org/news/refresh-the-page-in-javascript-js-reload-window-tutorial/#:~:text=You%20can%20use%20the%20location,method%20responsible%20for%20page%20reloading.
+***************************************************************************************/
 
 //this function just reloads the page if the player wants to play again
 function playAgain(){
