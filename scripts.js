@@ -21,6 +21,13 @@ function playHand(){
             //update button
             document.querySelector("#play-hand").style.display = "none";
             document.querySelector("#button-group").appendChild(createNewElement("button", "play-again", "Play Again"));
+            
+            //remove handlers
+            const choices = document.querySelectorAll('.choice');
+            
+            choices.forEach((choice) => {
+                choice.removeEventListener("mouseover", hoverMouse);
+            });
         
             //TODO: Remove event listeners
 
