@@ -132,9 +132,8 @@ function playHand(){
             
             //Update button to play-again
             document.querySelector("#play-hand").style.display = "none";
-                if(!document.querySelector('#play-again')){
-                document.querySelector("#button-group").appendChild(createNewElement("button", "play-again", "Play Again"));
-            }
+            document.querySelector("#button-group").appendChild(createNewElement("button", "play-again", "Play Again"));
+            
             
             //Remove eventHandlers:
                 //choices is a list of the rock, paper, and scissors <div> elements
@@ -222,8 +221,8 @@ function playAgain(){
         //Update the h2
         document.querySelector("h2").innerHTML = "Rock, Paper, Scissors";
 
-        //If the play-again button exists, remove it from the dom
-        if(document.querySelector("#play-again")) document.querySelector("#play-again").remove();
+        //Remove the play-again button from the document, because it's added again in the playHand function
+        document.querySelector("#play-again").remove();
         
         //Display the Play Hand button again
         document.querySelector("#play-hand").style.display = '';
