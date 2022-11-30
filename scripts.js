@@ -7,6 +7,13 @@
 ***************************************************************************************/
 
 
+// function removeChoicesListeners(){
+//     const choices = document.querySelectorAll('.choice');
+//     choices.forEach(choice => {
+//         choice.replaceWith(choice.cloneNode(true));
+//     });
+// }
+
 let playerSelection;
 let computerSelection;
 let game = ["rock", "paper", "scissors"];
@@ -16,9 +23,49 @@ function initializeGame(){
         .addEventListener("click", () => {
             document.querySelector("#game-start").style.display = "none";
             document.querySelector("#button-group").appendChild(createNewElement("button", "play-hand", "Play Hand"));
-            listenForChoice();
-            playHand();
+            //Adding as a separate function so user can easily playAgain
+            gamePlay();
         });
+}
+
+//this function accepts a string representing the type of element to add
+//a string representing the id of the new element
+// and a string indicating the text to add to the element
+//it returns a new element with an id and text
+//if the element is a button, it adds a class of 'play-button' to the element
+
+/***************************************************************************************
+*    Title: Create <span> element, change its color and append to document - Javascript DOM HTML Element
+*    Author: www.java2s.com
+*    Date: 2016
+*    Code version: javaScript
+*    Availability: http://www.java2s.com/example/javascript/dom-html-element/create-span-element-change-its-color-and-append-to-document.html
+***************************************************************************************/
+function createNewElement(type, idText, text){
+    let newElement = document.createElement(type);
+    newElement.setAttribute("id", idText);
+    newElement.textContent = text;
+
+    if(type === "button"){
+        newElement.classList.add('play-buttons');
+    }
+    return newElement;
+}
+
+function gamePlay() {
+    listenForChoice();
+    playHand();
+}
+
+//This function creates event listeners for the choices
+function listenForChoice(){
+    const choices = document.querySelectorAll('.choice');
+
+    choices.forEach((choice, i, arr) => {
+        choice.addEventListener("mouseover", hoverMouse);
+        choice.addEventListener("mouseleave", unhoverMouse);         
+        choice.addEventListener("click", clickChoice);
+    });
 }
 
 function playHand(){
@@ -27,33 +74,41 @@ function playHand(){
         if (playerSelection === undefined) {
             document.querySelector("h2").innerHTML = "You Must Select Rock, Paper, or Scissors";
         } else {
-        //if a choice has been made, play the hand
-            //update button to play-again
+            //If a choice has been made, play the hand  and update button to play-again
             document.querySelector("#play-hand").style.display = "none";
-            document.querySelector("#button-group").appendChild(createNewElement("button", "play-again", "Play Again"));
+                if(!document.querySelector('#play-again')){
+                document.querySelector("#button-group").appendChild(createNewElement("button", "play-again", "Play Again"));
+            }
             
-            //remove eventHandlers
+            //Remove eventHandlers:
+            //Choices is a list of the rock, paper, and scissors <div> elements
             const choices = document.querySelectorAll('.choice');
+            
+            //For each of these choices, remove the event listener
             choices.forEach((choice) => {
                 choice.removeEventListener("mouseover", hoverMouse);
                 choice.removeEventListener("mouseleave", unhoverMouse);
                 choice.removeEventListener("click", clickChoice);
             });
 
-            //get computer selection
+            //Get computer selection
             computerSelection = Math.floor(Math.random() * 3);
             
-            //if it's a tie, set the color of the icon to mixed
-            //and show draw message
+            //If it's a tie, set the color of the icon to mixed and show draw message
             if(computerSelection === game.indexOf(playerSelection.toString())){
+
+                console.log(game[computerSelection], playerSelection);//TROUBLESHOOT
+            
                 document.querySelector("h2").innerHTML = "Draw!";
                 let computerIcon = document.getElementById(game[computerSelection]).children;
                 for (let item of computerIcon){
                     item.classList.add("draw");
                 }
             } else {
-            //if it's not a draw, do this
-                //find the icon representing the computer's selection
+
+                console.log(game[computerSelection], playerSelection);//TROUBLESHOOT
+
+                //If it's not a draw, find the icon representing the computer's selection
                 let computerIcon = document.getElementById(game[computerSelection]).children;
                 //update the icon's color to yellow
                 for (let item of computerIcon){
@@ -84,11 +139,11 @@ function setFinalText(){
         paper_scissors: {actionTextIndex: 1, winTextIndex: 1}, 
         rock_paper: {actionTextIndex: 2, winTextIndex: 1}
     }
-    //here are the arrays holding the text choices
+    //arrays holding text choices
     let actionTextOptions = ["Rock crushes Scissors", "Scissors cut Paper", "Paper covers Rock"];
     let winTextOptions = ["You Win!", "You Lose!"]
 
-    //update h2 to show the action text
+    //update h2 to display action text
     document.querySelector("h2").innerHTML = actionTextOptions[results[playerVsComputer].actionTextIndex];
     
     //create a span element to hold the phrase "You Win!" or "You Lose!"
@@ -108,40 +163,7 @@ function setFinalText(){
     document.querySelector("h2").appendChild(winPhrase);
 }
 
-//this function accepts a string representing the type of element to add
-//a string representing the id of the new element
-// and a string indicating the text to add to the element
-//it returns a new element with an id and text
-//if the element is a button, it adds a class of 'play-button' to the element
 
-/***************************************************************************************
-*    Title: Create <span> element, change its color and append to document - Javascript DOM HTML Element
-*    Author: www.java2s.com
-*    Date: 2016
-*    Code version: javaScript
-*    Availability: http://www.java2s.com/example/javascript/dom-html-element/create-span-element-change-its-color-and-append-to-document.html
-***************************************************************************************/
-function createNewElement(type, idText, text){
-    let newElement = document.createElement(type);
-    newElement.setAttribute("id", idText);
-    newElement.textContent = text;
-
-    if(type === "button"){
-        newElement.classList.add('play-buttons');
-    }
-    return newElement;
-}
-
-//this function creates event listeners to the choices
-function listenForChoice(){
-    const choices = document.querySelectorAll('.choice');
-
-    choices.forEach((choice, i, arr) => {
-        choice.addEventListener("mouseover", hoverMouse);
-        choice.addEventListener("mouseleave", unhoverMouse);         
-        choice.addEventListener("click", clickChoice);
-    });
-}
 
 /***************************************************************************************
 *    Title: Function identity in JavaScript, or how to remove event listeners properly
@@ -153,27 +175,26 @@ function listenForChoice(){
 
 //the following functions handle what happens when the choices are heard
 
-//update h2 when mouse hovers over choice
+//Update h2 with the possible choice when mouse hovers over choice
 function hoverMouse(event){
     let possibleChoice = event.target.parentElement.id;
     document.querySelector("h2").innerHTML = possibleChoice.charAt(0).toUpperCase() + possibleChoice.slice(1) + " . . . ";
 }
 
-//update h2 when mouse moves from the choice
+//Update h2 when mouse moves away from the possible choice
 function unhoverMouse(){
     let headerTwoText
-    //if the player has already made a selection, display the selection in h2
+    //If the player has already made a selection, display the selection in h2
     if(playerSelection !== undefined){
         headerTwoText = `${playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)} . . .`;
     } else {
-    //otherwise, return the h2 to the beginning text
+    //Otherwise, return the h2 to the beginning text
         headerTwoText = "Rock, Paper, Scissors";
     }
-        document.querySelector("h2").innerHTML = headerTwoText;
+    document.querySelector("h2").innerHTML = headerTwoText;
 }
 
-//set the playerSelection as the choice that was clicked 
-//and update the h2
+//Set the playerSelection as the choice that was clicked and update the h2
 function clickChoice (event){
         //update color of previous selection to white
         if(playerSelection !== undefined){
@@ -200,10 +221,38 @@ function clickChoice (event){
 *    Availability: https://www.freecodecamp.org/news/refresh-the-page-in-javascript-js-reload-window-tutorial/#:~:text=You%20can%20use%20the%20location,method%20responsible%20for%20page%20reloading.
 ***************************************************************************************/
 
-//this function just reloads the page if the player wants to play again
+//Steps to play again
 function playAgain(){
     document.querySelector("#play-again").addEventListener("click", () => {
-        document.location.reload();
+        
+        //Remove the eventListener from the Play Hand button
+        document.querySelector("#play-hand").replaceWith(document.querySelector("#play-hand").cloneNode(true));
+        
+        //Update the header
+        document.querySelector("h2").innerHTML = "Rock, Paper, Scissors";
+
+        //If the play-again button exists, remove it from the dom
+        if(document.querySelector("#play-again")) document.querySelector("#play-again").remove();
+        
+        //Display the Play Hand button again
+        document.querySelector("#play-hand").style.display = '';
+
+        //Turn each icon white again
+        let choices = document.querySelectorAll(".choice");
+        for(let choice of choices){
+            for (let item of choice.children){
+                item.style.color = "#FFFFFF";
+                item.classList.remove("draw");
+            }
+        }
+        
+        //Reset the player and computer selections to undefined
+        playerSelection = undefined;
+        computerSelection = undefined;
+
+        //Restart the game at gamePlay
+        gamePlay();
+
     })
  };
 
